@@ -1,1 +1,5 @@
-alert('huy')
+"use strict";
+
+    console.log('vasya')
+
+
