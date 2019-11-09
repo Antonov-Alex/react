@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import EditForm from '../edit-form/edit-form';
 
 export default class PostListItem extends Component{
    constructor(props) {
@@ -22,10 +23,17 @@ export default class PostListItem extends Component{
     this.setState(( {like}) => ({
         like: !like
     }))
+
+    // onEdit() {
+    //   <EditForm 
+    //            styles="display:flex";
+    //   />
+
+    // }
  }
 
    render(){
-    const { lable } = this.props;
+    const { lable, onDelete } = this.props;
     const { important, like } = this.state;
     let classNames = "app-list-item d-flex justify-content-between";
 
@@ -45,8 +53,13 @@ export default class PostListItem extends Component{
            {lable} 
          </span>
 
+            
          <div className="d-flex justify-content-center align-items-center">
-             <span className="app-list-item-label-date">06.11.19</span>
+             <button className="btn-edit btn-m"
+                     type="button"
+                     onClick={this.onEdit}
+             > edit</button>
+             
              <button
                      className="btn-star btn-sm"
                      type="button"
@@ -56,13 +69,18 @@ export default class PostListItem extends Component{
                 <i className="fa fa-star"></i>
              </button>
 
-             <button className="btn-trash btn-sm">
+             <button className="btn-trash btn-sm"
+                     type="button"
+                     onClick={onDelete}
+             >
                 <i className="fa fa-trash-o"></i>
              </button>
 
              <i className="fa fa-heart"></i>
+             <span className="app-list-item-label-date">06/11</span>
          </div>
 
+         
      </div>
      )
    }

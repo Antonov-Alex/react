@@ -1,0 +1,16 @@
+.edit-form{
+    display: flex;
+    position: absolute;
+    width: 791px;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+    outline: 0.5px solid blue;
+    background-color: cornflowerblue;;
+    top: 40vh;
+    left: 24%;
+}
+
+.edit-form-input{
+    width: 80%;
+}

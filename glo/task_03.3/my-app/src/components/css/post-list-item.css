@@ -3,7 +3,7 @@
 }
 
 .app-list-item button {
-  width: 35px;
+  width: 45px;
   height: 35px;
   margin: 3px;
   font-size: 17px;
@@ -57,3 +57,8 @@
   font-size: 13px;
   color: blue;
 }
+
+/* .edit-form{
+  width: 200px;
+  height: 300px;
+} */

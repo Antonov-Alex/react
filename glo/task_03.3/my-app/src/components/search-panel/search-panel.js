@@ -1,8 +1,9 @@
 import React from 'react';
+import { Input } from 'reactstrap';
 
 const SearchPanel = () => {
     return (
-        <input 
+        <Input
            className="form-control search-input"
            type="text"
            placeholder="Поиск по записям"
