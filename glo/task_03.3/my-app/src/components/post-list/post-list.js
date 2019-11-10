@@ -8,7 +8,7 @@ const ListGroupItem = styled.li`
         margin-top: 10px;
 `
 
-const PostList = ({ posts, onDelete }) => {
+const PostList = ({ posts, onDelete, onToggleImportant, onToggleLiked }) => {
 
     const elements = posts.map(item => {
         if(typeof item !== 'object'){
@@ -20,7 +20,10 @@ const PostList = ({ posts, onDelete }) => {
          <ListGroupItem key={id} >
              <PostListItem 
              {...itemProps} 
-             onDelete={() => onDelete(id)}/>
+             onDelete={() => onDelete(id)}
+             onToggleLiked={() => onToggleLiked(id)}
+             onToggleImportant={() => onToggleImportant(id)}
+             />
          </ListGroupItem>
         )}
     });
