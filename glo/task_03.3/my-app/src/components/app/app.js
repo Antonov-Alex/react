@@ -36,6 +36,7 @@ export default class App extends Component  {
            this.onToggleLiked = this.onToggleLiked.bind(this);
            this.onToggleImportant = this.onToggleImportant.bind(this);
            this.onUpdateSearch = this.onUpdateSearch.bind(this);
+           //this.onToggleMethod = this.onToggleMethod.bind(this);
            this.onFilterSelect = this.onFilterSelect.bind(this);
            
        }
@@ -100,6 +101,21 @@ export default class App extends Component  {
                }
            })
        }
+
+    //    onToggleMethod(id, method){
+    //     this.setState(({data}) => {
+    //         const index = data.findIndex(el => el.id === id);
+    //         const old = data[index];
+    //         const newItem = {...old};
+    //         newItem.method = method;
+    //         console.log(newItem)
+    //         const newArr = [...data.slice(0, index), newItem, ...data.slice(index +1)]
+
+    //         return{
+    //             data: newArr
+    //         }
+    //     })
+    // }
      
 
        searchPost(items, term) {
@@ -154,6 +170,7 @@ export default class App extends Component  {
                                      onDelete={ this.deleteItem }
                                      onToggleImportant={this.onToggleImportant}
                                      onToggleLiked={this.onToggleLiked}
+                                    //onToggleMethod={this.onToggleMethod}
                           />
                        <PostAddForm 
                           onAdd={this.addItem}
