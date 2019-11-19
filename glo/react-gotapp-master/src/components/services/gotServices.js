@@ -15,7 +15,7 @@ export default class GotService {
           };
         async  getAllCharecters() {
              const res = await this.getResurce("/characters?page=5&pageSize=10");
-             return res.map(this._transformCharcater());
+             return res;
           }
 
          async getCharecter(id){
@@ -83,5 +83,8 @@ got.getAllBooks()
 
 got.getAllHouses()
 .then(res => res);
+
+got.getAllCharecters()
+  .then((res) => console.log(res))
 
 

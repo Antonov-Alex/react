@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-//import './randomChar.css';
+import './randomChar.css';
 import styled from 'styled-components';
 import gotService from '../services/gotServices'
 import Spiner from '../spiner';
@@ -30,10 +30,7 @@ const AppList = styled.ul`
 
 
 export default class RandomChar extends Component {
-    constructor(){
-        super();
-        this.updateChar()
-    }
+   
     gotService = new gotService();
       
        state = {
@@ -41,6 +38,15 @@ export default class RandomChar extends Component {
            loading: true,
            error: false,
            
+       }
+
+       componentDidMount(){
+          this.updateChar()
+          this.timerId = setInterval(this.updateChar, 10500);
+       }
+
+       componentWillUnmount() {
+          clearInterval(this.timerId);
        }
        
        onCharLoaded = (char) => {
@@ -54,20 +60,18 @@ export default class RandomChar extends Component {
            })
        }
 
-       updateChar() {
+       updateChar = () => {
+           
            const id = Math.floor(Math.random()*140 + 25);
-           
-           
            this.gotService.getCharecter(id)
                 .then(this.onCharLoaded)
                 .catch(this.onError);
        }
 
-       rendom(){
-           console.log('privet')
-       }
+       
   
    render() {
+       console.log('render')
     const { char, loading, error }  = this.state;
       const errorMassage = error ? <ErrorMassage/> : null;
       const spiner = loading ? <Spiner/> : null;

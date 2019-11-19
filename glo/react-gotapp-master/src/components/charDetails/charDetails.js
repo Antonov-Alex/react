@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-//import './charDetails.css';
+import './charDetails.css';
 import styled from 'styled-components';
+import gotService from '../services/gotServices';
+import Spiner from '../spiner';
+import ErrorMassage from '../errorMassage';
 
 const AppBlock = styled.div`
         background-color: #fff;
@@ -19,30 +22,78 @@ const AppListItem = styled.li`
 
 export default class CharDetails extends Component {
 
+    gotService = new gotService();
+
+    state = {
+         char: null,
+         error: false,
+    }
     
+    componentDidMount() {
+        this.updateChar();
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.charId !== prevProps.charId){
+            this.updateChar();
+        }
+    }
+
+    componentDidCatch  ()  {
+        
+        this.setState({
+            error: true
+        })
+     }
+
+    updateChar(){
+        const { charId } = this.props;
+        if(!charId) {
+            return;
+        }
+
+        this.gotService.getCharecter(charId)
+            .then((char) => {
+                this.setState({char})
+            })
+
+        //this.foo.bar = 0;
+    }
 
     render() {
+
+        if(!this.state.char) {
+            return <Spiner/>
+     }
+        
+       if (this.state.error) {
+        return <ErrorMassage/>
+     } 
+
+        const {name, gender, born, died, culture} = this.state.char;
+
         return (
+
             <AppBlock>
-                <h4>John Snow</h4>
+                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
 
                     <AppListItem>
                         <span className="term">Gender</span>
-                        <span>male</span>
+                        <span>{gender}</span>
                     </AppListItem>
                     <AppListItem>
                         <span className="term">Born</span>
-                        <span>1783</span>
+                        <span>{born}</span>
                     </AppListItem>
 
                     <AppListItem>
                         <span className="term">Died</span>
-                        <span>1820</span>
+                        <span>{died}</span>
                     </AppListItem>
                     <AppListItem>
                         <span className="term">Culture</span>
-                        <span>First</span>
+                        <span>{culture}</span>
                     </AppListItem>
                 </ul>
             </AppBlock>
