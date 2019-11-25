@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import gotService from '../services/gotServices'
 import Spiner from '../spiner';
 import ErrorMassage from '../errorMassage/'
+import PropTypes from 'prop-types';
 
 const AppBlock = styled.div`
        background-color: #fff;
@@ -40,6 +41,10 @@ export default class RandomChar extends Component {
            
        }
 
+       static defaultProps = {
+           interval: 15000
+       }
+
        componentDidMount(){
           this.updateChar()
           this.timerId = setInterval(this.updateChar, 10500);
@@ -71,8 +76,8 @@ export default class RandomChar extends Component {
        
   
    render() {
-       console.log('render')
-    const { char, loading, error }  = this.state;
+       
+      const { char, loading, error }  = this.state;
       const errorMassage = error ? <ErrorMassage/> : null;
       const spiner = loading ? <Spiner/> : null;
       const content = !(loading || error) ? <View char={char}/> : null ;
@@ -86,6 +91,13 @@ export default class RandomChar extends Component {
         </AppBlock>
     );
   }
+}
+RandomChar.defaultProps = {
+    interval: 1500
+}
+
+RandomChar.propTypes = {
+    interval: PropTypes.number
 }
 
 const View = ({char}) => {

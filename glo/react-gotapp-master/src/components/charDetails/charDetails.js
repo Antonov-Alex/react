@@ -5,6 +5,19 @@ import gotService from '../services/gotServices';
 import Spiner from '../spiner';
 import ErrorMassage from '../errorMassage';
 
+const Field = ({item, field, lable}) => {
+   return(
+    <AppListItem>
+           <span className="term">{lable}</span>
+           <span>{[field]}</span>
+   </AppListItem>
+   )
+}
+
+export {
+    Field
+}
+
 const AppBlock = styled.div`
         background-color: #fff;
         padding: 25px 25px 15px 25px;
@@ -20,16 +33,22 @@ const AppListItem = styled.li`
       align-items: center;
 `
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
 
     gotService = new gotService();
 
     state = {
          char: null,
+         book: null,
          error: false,
     }
     
+    
+
     componentDidMount() {
+        // const {getData} = this.props
+
+        // getData();
         this.updateChar();
     }
 
@@ -60,6 +79,17 @@ export default class CharDetails extends Component {
         //this.foo.bar = 0;
     }
 
+    updateBook() {
+         const { bookId} = this.props;
+         if(!bookId) {
+             return
+         }
+         this.gotService.getBook(bookId)
+            .then((book) => {
+              this.state({book})
+            })
+    }
+
     render() {
 
         if(!this.state.char) {
@@ -76,25 +106,10 @@ export default class CharDetails extends Component {
 
             <AppBlock>
                  <h4>{name}</h4>
+        
                 <ul className="list-group list-group-flush">
 
-                    <AppListItem>
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </AppListItem>
-                    <AppListItem>
-                        <span className="term">Born</span>
-                        <span>{born}</span>
-                    </AppListItem>
-
-                    <AppListItem>
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </AppListItem>
-                    <AppListItem>
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </AppListItem>
+                   {this.props.children}
                 </ul>
             </AppBlock>
         );

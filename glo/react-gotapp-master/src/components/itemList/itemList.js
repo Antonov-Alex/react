@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import gotService from '../services/gotServices';
+
 //import './itemList.css';
 import styled from 'styled-components';
 import Spiner from '../spiner';
 import ErrorMassage from '../errorMassage';
+import PropTypes from 'prop-types';
 
 const AppList = styled.ul`
      cursor: pointer;
@@ -22,18 +23,31 @@ const AppList = styled.ul`
 
 export default class ItemList extends Component {
 
-    gotService = new gotService();
+    
 
     state = {
-         charList: null,
+         itemList: null,
          error: false,
     }
 
+    // static defaultProps = {
+    //     onItemSelected: () => {}
+    // }
+    
+    // static PropTypes = {
+    //     onItemSelected: PropTypes.func,
+        
+    // }
+
     componentDidMount() {
-        this.gotService.getAllCharecters()
-            .then( (charList) => {
+
+        const {getData} = this.props;
+        
+
+        getData()
+            .then( (itemList) => {
                 this.setState({
-                    charList
+                    itemList
                 })
             })
     }
@@ -47,18 +61,21 @@ export default class ItemList extends Component {
 
     renderItems(arr){
 
-        const id = Math.floor(Math.random()*140 + 41);
+        //const id = Math.floor(Math.random()*140 + 41);
 
-        return arr.map((item, i) => {
+        return arr.map((item) => {
+            const {id} = item;
+            const lable = this.props.renderItem(item);
+
            return (
                
             <li 
-               key={i}
+               key={id}
                className="list-group-item"
-               onClick={ () => this.props.onCharSelected(id)}
+               onClick={ () => this.props.onItemSelected(id)}
                >
              
-               {item.name}
+               {lable}
                
            </li>
            )
@@ -70,13 +87,13 @@ export default class ItemList extends Component {
             return <ErrorMassage/>
         }
 
-        const {charList} = this.state;
+        const {itemList} = this.state;
 
-        if(!charList) {
+        if(!itemList) {
                return <Spiner/>
         }
 
-        const items = this.renderItems(charList);
+        const items = this.renderItems(itemList);
 
         return (
             <AppList>
@@ -85,3 +102,4 @@ export default class ItemList extends Component {
         );
     }
 }
+
