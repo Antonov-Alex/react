@@ -1,0 +1,11 @@
+
+.toggle-btn{
+    display: block;
+    
+    background-color: blueviolet;
+    height: 40px;
+    margin: 0 auto;
+    padding: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}

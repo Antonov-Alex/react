@@ -1,78 +1,56 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect }  from 'react';
 
 //import './itemList.css';
-import styled from 'styled-components';
+
 import Spiner from '../spiner';
-import ErrorMassage from '../errorMassage';
-import PropTypes from 'prop-types';
 
-const AppList = styled.ul`
-     cursor: pointer;
 
-     li{
-        cursor: pointer;
-        font-size: 16px;
-        color: red;
-        font-weight: bold;
-     }
-`;;
+
+// const AppList = styled.ul`
+//      cursor: pointer;
+
+//      li{
+//         cursor: pointer;
+//         font-size: 16px;
+//         color: red;
+//         font-weight: bold;
+//      }
+// `;;
  
 
 
 
 
-export default class ItemList extends Component {
+ function ItemList ({ getData, onItemSelected, renderItem }) {
 
     
-
-    state = {
-         itemList: null,
-         error: false,
-    }
-
-    // static defaultProps = {
-    //     onItemSelected: () => {}
-    // }
+    const [itemList, updateList] = useState([]);
     
-    // static PropTypes = {
-    //     onItemSelected: PropTypes.func,
-        
-    // }
 
-    componentDidMount() {
-
-        const {getData} = this.props;
-        
-
+   
+    useEffect(() => {
         getData()
-            .then( (itemList) => {
-                this.setState({
-                    itemList
-                })
-            })
-    }
-
-    componentDidCatch  ()  {
+        .then( (data) => {
+            updateList(data)
+         })
         
-        this.setState({
-            error: true
-        })
-     }
+    }, [])
+    
 
-    renderItems(arr){
+         function renderItems(arr){
 
         //const id = Math.floor(Math.random()*140 + 41);
 
         return arr.map((item) => {
             const {id} = item;
-            const lable = this.props.renderItem(item);
+            const lable = renderItem(item);
 
            return (
                
             <li 
                key={id}
                className="list-group-item"
-               onClick={ () => this.props.onItemSelected(id)}
+               onClick={ () => onItemSelected(id)}
                >
              
                {lable}
@@ -82,24 +60,22 @@ export default class ItemList extends Component {
         })
     }
 
-    render() {
-        if (this.state.error) {
-            return <ErrorMassage/>
-        }
+  
 
-        const {itemList} = this.state;
+    
 
-        if(!itemList) {
-               return <Spiner/>
-        }
-
-        const items = this.renderItems(itemList);
-
-        return (
-            <AppList>
-                {items}
-            </AppList>
-        );
+    if(!itemList) {
+           return <Spiner/>
     }
+
+    const items = renderItems(itemList);
+
+    return (
+        <ul>
+            {items}
+        </ul>
+    );
 }
+
+export default ItemList;
 
